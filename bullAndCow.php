@@ -15,26 +15,43 @@ for ($guesses = 1; ; $guesses++) {
         else
             break;
     }
-    if ($guess == $chosen) {
+   
+  
+
+    $result = countBullsAndCows($guess,$chosen);
+
+     if ($result["bulls"] == $size) {
         echo "You did it in $guesses attempts!\n";
         break;
-    } else {
-        $bulls = 0;
-        $cows = 0;
-        foreach (range(0, $size-1) as $i) {
-            if ($guess[$i] == $chosen[$i])
-                $bulls++;
-            else if (strpos($chosen, $guess[$i]) !== FALSE)
-                $cows++;
-        }
-        echo "$cows cows, $bulls bulls\n";
     }
+
+    echo "$result[cows] cows, $result[bulls] bulls\n";
+    
 }
  
+function countBullsAndCows($guess, $chosen)
+{
+    global $size;
+    if ($guess == $chosen) {
+        return array("cows"=> 0,"bulls"=>$size);;
+    }
+    $bulls = 0;
+    $cows = 0;
+    foreach (range(0, $size-1) as $i) {
+        if ($guess[$i] == $chosen[$i])
+            $bulls++;
+        else if (strpos($chosen, $guess[$i]) !== FALSE)
+            $cows++;
+    }
+
+    return array("cows"=> $cows,"bulls"=>$bulls);
+}
+
 function checkguess($g)
 {
   global $size;
   return count(array_unique(str_split($g))) == $size &&
     preg_match("/^[1-9]{{$size}}$/", $g);
 }
+
 ?>
