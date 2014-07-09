@@ -22,7 +22,6 @@ class Game{
 
 	function countBullsAndCows($guess, $chosen)
 	{
-		print $chosen;
 	    if ($guess == $chosen) {
 	        $this->result = "$this->size"."B0C";
 	    }
