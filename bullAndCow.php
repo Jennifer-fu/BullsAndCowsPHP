@@ -6,7 +6,9 @@ $chosen = implode(array_rand(array_flip(range(1,9)), $size));
  
 echo "I've chosen a number from $size unique digits from 1 to 9; you need
 to input $size unique digits to guess my number\n";
- 
+
+$game = new Game($size);  
+    
 for ($guesses = 1; ; $guesses++) {
     while (true) {
         echo "\nNext guess [$guesses]: ";
@@ -17,7 +19,6 @@ for ($guesses = 1; ; $guesses++) {
             break;
     }
 
-    $game = new Game($size);  
     $game->countBullsAndCows($guess,$chosen);
     if ($game->over()) {
         echo "You did it in $guesses attempts!\n";
