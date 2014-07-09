@@ -1,13 +1,12 @@
 <?php
 include("Game.php");
+include("AnswerGenerator.php");
 $size = 4;
- 
-$chosen = implode(array_rand(array_flip(range(1,9)), $size));
- 
+  
 echo "I've chosen a number from $size unique digits from 1 to 9; you need
 to input $size unique digits to guess my number\n";
 
-$game = new Game($size);  
+$game = new Game(new AnswerGenerator($size));  
     
 for ($guesses = 1; ; $guesses++) {
     while (true) {
@@ -19,7 +18,7 @@ for ($guesses = 1; ; $guesses++) {
             break;
     }
 
-    $game->countBullsAndCows($guess,$chosen);
+    $game->run($guess);
     if ($game->over()) {
         echo "You did it in $guesses attempts!\n";
         break;

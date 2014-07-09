@@ -1,13 +1,11 @@
 <?php
 class Game{
 
-	var $size;
 	var $result;
 	var $chosen;
 
-	function __construct($size){
-		$this->size = $size;
-		$this->chosen = implode(array_rand(array_flip(range(1,9)), $size));
+	function __construct($answerGenerator){
+		$this->chosen = $answerGenerator->run();
 	}
 
 	function result()
@@ -17,19 +15,19 @@ class Game{
 
 	function over()
 	{
-		return substr($this->result, 0, 1) == $this->size;
+		return substr($this->result, 0, 1) == strlen($this->chosen);
 	}
 
 
-	function countBullsAndCows($guess)
+	function run($guess)
 	{
 		print $this->chosen;
 	    if ($guess == $this->chosen) {
-	        $this->result = "$this->size"."B0C";
+	        $this->result = "strlen($this->chosen)"."B0C";
 	    }
 	    $bulls = 0;
 	    $cows = 0;
-	    foreach (range(0, $this->size-1) as $i) {
+	    foreach (range(0, strlen($this->chosen)-1) as $i) {
 	        if ($guess[$i] == $this->chosen[$i])
 	            $bulls++;
 	        else if (strpos($this->chosen, $guess[$i]) !== FALSE)
