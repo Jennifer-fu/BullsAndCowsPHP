@@ -1,4 +1,5 @@
 <?php
+include("InvalidInputException.php");
 class Game{
 
 	var $result;
@@ -21,6 +22,12 @@ class Game{
 
 	function run($guess)
 	{
+		$this->checkInput($guess);
+		$this->countBullsAndCows($guess);
+	}
+
+	private function countBullsAndCows($guess)
+	{
 		print $this->chosen;
 	    if ($guess == $this->chosen) {
 	        $this->result = "strlen($this->chosen)"."B0C";
@@ -35,6 +42,19 @@ class Game{
 	    }
 
 	    $this->result = "$bulls" . "B" . "$cows" . "C";
+	}
+
+	private function checkInput($guess)
+	{
+		$size = strlen($this->chosen);
+		
+		if(count(array_unique(str_split($guess))) != strlen($this->chosen))
+			throw new InvalidInputException("$size digits... retry\n", 1);
+
+		if(!preg_match("/^[1-9]{{$size}}$/", $guess))
+			throw new InvalidInputException("no repetition, from 1 to 9", 2);
+					
+		 return true;
 	}
 }
 ?>
