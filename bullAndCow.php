@@ -1,4 +1,5 @@
 <?php
+include("Game.php");
 $size = 4;
  
 $chosen = implode(array_rand(array_flip(range(1,9)), $size));
@@ -15,10 +16,10 @@ for ($guesses = 1; ; $guesses++) {
         else
             break;
     }
-   
-  
 
-    $result = countBullsAndCows($guess,$chosen);
+    $game = new Game($size);
+   
+    $result = $game->countBullsAndCows($guess,$chosen);
 
      if ($result["bulls"] == $size) {
         echo "You did it in $guesses attempts!\n";
@@ -29,24 +30,6 @@ for ($guesses = 1; ; $guesses++) {
     
 }
  
-function countBullsAndCows($guess, $chosen)
-{
-    global $size;
-    if ($guess == $chosen) {
-        return array("cows"=> 0,"bulls"=>$size);;
-    }
-    $bulls = 0;
-    $cows = 0;
-    foreach (range(0, $size-1) as $i) {
-        if ($guess[$i] == $chosen[$i])
-            $bulls++;
-        else if (strpos($chosen, $guess[$i]) !== FALSE)
-            $cows++;
-    }
-
-    return array("cows"=> $cows,"bulls"=>$bulls);
-}
-
 function checkguess($g)
 {
   global $size;
