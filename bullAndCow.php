@@ -17,16 +17,13 @@ for ($guesses = 1; ; $guesses++) {
             break;
     }
 
-    $game = new Game($size);
-   
-    $result = $game->countBullsAndCows($guess,$chosen);
-
-     if ($result["bulls"] == $size) {
+    $game = new Game($size);  
+    $game->countBullsAndCows($guess,$chosen);
+    if ($game->over()) {
         echo "You did it in $guesses attempts!\n";
         break;
     }
-
-    echo "$result[cows] cows, $result[bulls] bulls\n";
+    echo "$game->result\n";
     
 }
  

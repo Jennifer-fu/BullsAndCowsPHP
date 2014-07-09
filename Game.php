@@ -1,17 +1,30 @@
 <?php
 class Game{
 
-	var $guess;
 	var $size;
+	var $result;
 
 	function __construct($size){
 		$this->size = $size;
 	}
 
+	function result()
+	{
+		return $this->result;
+	}
+
+	function over()
+	{
+		return substr($this->result, 0, 1) == $this->size;
+		
+	}
+
+
 	function countBullsAndCows($guess, $chosen)
 	{
+		print $chosen;
 	    if ($guess == $chosen) {
-	        return array("cows"=> 0,"bulls"=>$this->size);
+	        $this->result = "$this->size"."B0C";
 	    }
 	    $bulls = 0;
 	    $cows = 0;
@@ -22,7 +35,8 @@ class Game{
 	            $cows++;
 	    }
 
-	    return array("cows"=> $cows,"bulls"=>$bulls);
+	    $this->result = "$bulls" . "B" . "$cows" . "C";
 	}
+
 }
 ?>
